@@ -1,4 +1,4 @@
-package com.facu.disney.disney;
+package com.facu.disney;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
