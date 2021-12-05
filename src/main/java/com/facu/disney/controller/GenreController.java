@@ -18,15 +18,15 @@ public class GenreController {
     @PostMapping
     public ResponseEntity<GenreDTO> saveGenre(@RequestBody GenreDTO genre) {
 
-        GenreDTO genreSaved = genreService.save(genre);
+        GenreDTO genreSaved = this.genreService.save(genre);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(genreSaved);
     }
     
     @GetMapping
-    public ResponseEntity<List<GenreDTO>> getAll(){
+    public ResponseEntity<List<GenreDTO>> getAllGenres(){
         
-        List<GenreDTO> genres = genreService.getAllGenres();
+        List<GenreDTO> genres = this.genreService.getAllGenres();
         
         return ResponseEntity.ok().body(genres);
     }
