@@ -36,7 +36,7 @@ public class MovieEntity {
     @Column(name = "id_genre", nullable = false)
     private Long genreId;
     
-    //muchos paises pueden tener muchos iconos y viceversa
+    //muchas peliculas pueden tener muchos actores y viceversa
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "actor_movie", 
             joinColumns = @JoinColumn(name = "id_movie"),

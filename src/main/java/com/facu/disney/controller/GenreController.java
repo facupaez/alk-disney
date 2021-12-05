@@ -2,6 +2,7 @@ package com.facu.disney.controller;
 
 import com.facu.disney.dto.GenreDTO;
 import com.facu.disney.service.GenreService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +21,13 @@ public class GenreController {
         GenreDTO genreSaved = genreService.save(genre);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(genreSaved);
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<GenreDTO>> getAll(){
+        
+        List<GenreDTO> genres = genreService.getAllGenres();
+        
+        return ResponseEntity.ok().body(genres);
     }
 }

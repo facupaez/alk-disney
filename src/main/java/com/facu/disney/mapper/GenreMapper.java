@@ -2,6 +2,8 @@ package com.facu.disney.mapper;
 
 import com.facu.disney.dto.GenreDTO;
 import com.facu.disney.entity.GenreEntity;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,5 +26,16 @@ public class GenreMapper {
         dto.setImage(entity.getImage());
         
         return dto;
+    }
+
+    // genre entity list to genre dto list
+    public List<GenreDTO> genreEntityList2DTOList(List<GenreEntity> entities) {
+        
+        List<GenreDTO> dtoList = new ArrayList<>();
+        for(GenreEntity entity : entities){
+            dtoList.add(this.genreEntity2DTO(entity));
+        }
+        
+        return dtoList;
     }
 }
