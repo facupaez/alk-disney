@@ -5,14 +5,14 @@ import javax.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "character")
+@Table(name = "actor")
 @Data
-public class Character {
+public class ActorEntity {
 
     @Id
-    @Column(name = "id_character")
+    @Column(name = "id_actor")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCharacter;
+    private Long idActor;
     
     private String image;
     
@@ -24,6 +24,6 @@ public class Character {
     
     private String history;
     
-    @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
-    private List<Movie> movies = new ArrayList<>();
+    @ManyToMany(mappedBy = "actors", cascade = CascadeType.MERGE)
+    private List<MovieEntity> movies = new ArrayList<>();
 }

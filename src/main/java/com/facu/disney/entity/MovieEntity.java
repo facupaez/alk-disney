@@ -9,10 +9,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "movie")
 @Data
-public class Movie {
+public class MovieEntity {
 
     @Id
-    @Column(name = "id_pelicula")
+    @Column(name = "id_movie")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMovie;
     
@@ -30,16 +30,16 @@ public class Movie {
     //lo usamos para pedir informacion como una lista peliculas y sus generos
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_genre", insertable = false, updatable = false)
-    private Genre genre;
+    private GenreEntity genre;
     
     //lo usamos para guardar o modificar
     @Column(name = "id_genre", nullable = false)
-    private Long idGenre;
+    private Long genreId;
     
     //muchos paises pueden tener muchos iconos y viceversa
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "character_movie", 
+    @JoinTable(name = "actor_movie", 
             joinColumns = @JoinColumn(name = "id_movie"),
-            inverseJoinColumns = @JoinColumn(name = "id_character"))
-    private Set<Character> characters = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "id_actor"))
+    private Set<ActorEntity> actors = new HashSet<>();
 }
