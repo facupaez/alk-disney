@@ -9,7 +9,7 @@ public class MovieDTO {
 
     private Long idMovie;
     private String image;
-    private String titile;
+    private String title;
     private String creationDate;
     private Long qualification;
     private Long genreId;
