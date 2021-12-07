@@ -25,6 +25,7 @@ public class ActorServiceImpl implements ActorService {
     @Autowired
     ActorSpecification actorSpecification;
 
+    //method save actor
     @Override
     public ActorDTO save(ActorDTO dto) {
         ActorEntity entity = this.actorMapper.actorDTO2Entity(dto);
@@ -34,8 +35,9 @@ public class ActorServiceImpl implements ActorService {
         return result;
     }
 
+    //get basic list actors
     @Override
-    public List<ActorBasicDTO> getBasic() {
+    public List<ActorBasicDTO> getBasicList() {
         List<ActorEntity> entities = this.actorRepository.findAll();
         List<ActorBasicDTO> result = this.actorMapper.actorEntityList2DTOBasicList(entities);
 
@@ -44,14 +46,14 @@ public class ActorServiceImpl implements ActorService {
 
     //method update actor
     @Override
-    public ActorDTO update(ActorDTO actor, Long idActor) {
+    public ActorDTO update(ActorDTO dto, Long idActor) {
 
         Optional<ActorEntity> entity = this.actorRepository.findById(idActor);
 
         if (!entity.isPresent()) {
             throw new InvalidParam("El id ingresado no existe.");
         }
-        this.actorMapper.actorEntityUpdate(entity.get(), actor);
+        this.actorMapper.actorEntityUpdate(entity.get(), dto);
         ActorEntity actorSaved = this.actorRepository.save(entity.get());
         ActorDTO result = this.actorMapper.actorEntity2DTO(actorSaved, false);
 
@@ -73,20 +75,20 @@ public class ActorServiceImpl implements ActorService {
         if (!entity.isPresent()) {
             throw new InvalidParam("El id ingresado no existe.");
         }
-        
+
         ActorDTO actor = this.actorMapper.actorEntity2DTO(entity.get(), true);
-        
+
         return actor;
     }
 
     //get filters details by id
     @Override
     public List<ActorDTO> getDetailsByFilters(String name, Long age, Set<Long> movies) {
-        
+
         ActorFiltersDTO filtersDTO = new ActorFiltersDTO(name, age, movies);
         List<ActorEntity> entities = this.actorRepository.findAll(this.actorSpecification.getActorByFilters(filtersDTO));
         List<ActorDTO> dtos = this.actorMapper.actorEntityList2DTOList(entities, true);
-        
+
         return dtos;
     }
 

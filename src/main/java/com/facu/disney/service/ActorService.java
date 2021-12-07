@@ -9,7 +9,7 @@ public interface ActorService {
 
     public ActorDTO save(ActorDTO actor);
 
-    public List<ActorBasicDTO> getBasic();
+    public List<ActorBasicDTO> getBasicList();
 
     public ActorDTO update(ActorDTO actor, Long idActor);
 

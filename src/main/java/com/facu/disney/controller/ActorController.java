@@ -28,9 +28,9 @@ public class ActorController {
 
     //basic actors list
     @GetMapping("/characters")
-    public ResponseEntity<List<ActorBasicDTO>> getBasic() {
+    public ResponseEntity<List<ActorBasicDTO>> getBasicList() {
 
-        List<ActorBasicDTO> actors = this.actorService.getBasic();
+        List<ActorBasicDTO> actors = this.actorService.getBasicList();
 
         return ResponseEntity.ok().body(actors);
     }

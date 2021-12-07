@@ -6,8 +6,6 @@ import lombok.*;
 @Setter
 public class ActorBasicDTO {
 
-    //controlar si es necesario id para listar por name e image
-    private Long idActor;
     private String image;
     private String name;
 }

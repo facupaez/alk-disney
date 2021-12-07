@@ -57,7 +57,6 @@ public class ActorMapper {
     //actorEntity to actorBasicDTO
     private ActorBasicDTO actorEntity2DTOBasic(ActorEntity entity) {
         ActorBasicDTO basicDTO = new ActorBasicDTO();
-        basicDTO.setIdActor(entity.getIdActor());
         basicDTO.setImage(entity.getImage());
         basicDTO.setName(entity.getName());
 
@@ -72,7 +71,8 @@ public class ActorMapper {
         entity.setWeight(dto.getWeight());
         entity.setHistory(dto.getHistory());
     }
-
+    
+     // actorEntity list to actorDTO list
     public List<ActorDTO> actorEntityList2DTOList(Collection<ActorEntity> entities, boolean loadMovies) {
         List<ActorDTO> dtos = new ArrayList<>();
         for (ActorEntity entity : entities) {
