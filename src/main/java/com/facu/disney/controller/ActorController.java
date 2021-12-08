@@ -67,9 +67,9 @@ public class ActorController {
     public ResponseEntity<List<ActorDTO>> getDetailsByFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Long age,
-            @RequestParam(required = false) Set<Long> movies) {
+            @RequestParam(required = false) Set<Long> movie) {
         
-        List<ActorDTO> actors = this.actorService.getDetailsByFilters(name, age, movies);
+        List<ActorDTO> actors = this.actorService.getDetailsByFilters(name, age, movie);
         
         return ResponseEntity.ok(actors);
     }

@@ -28,9 +28,9 @@ public class ActorSpecification {
 
             if (filtersDTO.getAge() != null) {
                 predicates.add(
-                        criteriaBuilder.like(
+                        criteriaBuilder.equal(
                                 criteriaBuilder.lower(root.get("age")),
-                                "%" + filtersDTO.getAge() + "%"));
+                                filtersDTO.getAge()));
             }
             
 

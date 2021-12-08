@@ -47,7 +47,7 @@ public class MovieMapper {
     }
 
     // movieEntity list to movieDTO list
-    List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entities, boolean loadActors) {
+    public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entities, boolean loadActors) {
         List<MovieDTO> moviesDTO = new ArrayList<>();
         for (MovieEntity entity : entities) {
             moviesDTO.add(this.movieEntity2DTO(entity, loadActors));
@@ -65,7 +65,7 @@ public class MovieMapper {
     }
 
     //actorEntity to actorBasicDTO
-    private MovieBasicDTO movieEntity2DTOBasic(MovieEntity entity) {
+    public MovieBasicDTO movieEntity2DTOBasic(MovieEntity entity) {
         MovieBasicDTO dto = new MovieBasicDTO();
         //dto.setIdActor(entity.getIdActor());
         dto.setImage(entity.getImage());

@@ -2,13 +2,16 @@ package com.facu.disney.service.impl;
 
 import com.facu.disney.dto.MovieBasicDTO;
 import com.facu.disney.dto.MovieDTO;
+import com.facu.disney.dto.MovieFiltersDTO;
 import com.facu.disney.entity.MovieEntity;
 import com.facu.disney.exception.InvalidParam;
 import com.facu.disney.mapper.MovieMapper;
 import com.facu.disney.repository.MovieRepository;
+import com.facu.disney.repository.specification.MovieSpecification;
 import com.facu.disney.service.MovieService;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,8 @@ public class MovieServiceImpl implements MovieService {
     MovieRepository movieRepository;
     @Autowired
     MovieMapper movieMapper;
+    @Autowired
+    MovieSpecification movieSpecification;
 
     //get basic list movies
     @Override
@@ -71,7 +76,23 @@ public class MovieServiceImpl implements MovieService {
     //method delete movie
     @Override
     public void delete(Long idMovie) {
-        this.movieRepository.deleteById(idMovie);
+        Optional<MovieEntity> entity = this.movieRepository.findById(idMovie);
+
+        if (!entity.isPresent()) {
+            throw new InvalidParam("El id ingresado no existe.");
+        }
+        MovieEntity movie = entity.get();
+        movie.setDeleted(false);
+        movieRepository.save(movie);
+    }
+
+    // method get details by country using filters
+    @Override
+    public List<MovieDTO> getDetailsByFilters(String title, Set<Long> genre, String order) {
+        MovieFiltersDTO filtersDTO = new MovieFiltersDTO(title, genre, order);
+        List<MovieEntity> entities = movieRepository.findAll(movieSpecification.getMovieByFilters(filtersDTO));
+        List<MovieDTO> dtos = movieMapper.movieEntityList2DTOList(entities, true);
+        return dtos;
     }
 
 }

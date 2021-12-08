@@ -83,9 +83,9 @@ public class ActorServiceImpl implements ActorService {
 
     //get filters details by id
     @Override
-    public List<ActorDTO> getDetailsByFilters(String name, Long age, Set<Long> movies) {
+    public List<ActorDTO> getDetailsByFilters(String name, Long age, Set<Long> movie) {
 
-        ActorFiltersDTO filtersDTO = new ActorFiltersDTO(name, age, movies);
+        ActorFiltersDTO filtersDTO = new ActorFiltersDTO(name, age, movie);
         List<ActorEntity> entities = this.actorRepository.findAll(this.actorSpecification.getActorByFilters(filtersDTO));
         List<ActorDTO> dtos = this.actorMapper.actorEntityList2DTOList(entities, true);
 

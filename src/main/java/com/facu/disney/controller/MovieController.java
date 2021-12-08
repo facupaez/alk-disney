@@ -4,6 +4,7 @@ import com.facu.disney.dto.MovieBasicDTO;
 import com.facu.disney.dto.MovieDTO;
 import com.facu.disney.service.MovieService;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class MovieController {
     MovieService movieService;
 
     //basic movies list
-    @GetMapping("/moviesList")
+    @GetMapping("/basic")
     public ResponseEntity<List<MovieBasicDTO>> getBasicList() {
 
         List<MovieBasicDTO> movies = this.movieService.getBasicList();
@@ -59,5 +60,17 @@ public class MovieController {
         this.movieService.delete(idMovie);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    //get details by id using filters
+    @GetMapping
+    public ResponseEntity<List<MovieDTO>> getDetailsByFilters(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Set<Long> genre,
+            @RequestParam(required = false, defaultValue = "ASC") String order) {
+
+        List<MovieDTO> movies = this.movieService.getDetailsByFilters(title, genre, order);
+
+        return ResponseEntity.ok(movies);
     }
 }

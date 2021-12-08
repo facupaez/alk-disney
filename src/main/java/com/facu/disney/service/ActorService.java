@@ -17,6 +17,6 @@ public interface ActorService {
 
     public ActorDTO getDetailsById(Long idActor);
 
-    public List<ActorDTO> getDetailsByFilters(String name, Long age, Set<Long> movies);
+    public List<ActorDTO> getDetailsByFilters(String name, Long age, Set<Long> movie);
     
 }

@@ -11,8 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "movie")
 @Data
-//soft delete
-@SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id_movie=?")
 //diferencia los estados de los eliminados y no eliminados
 @Where(clause = "deleted=false")
 public class MovieEntity {
