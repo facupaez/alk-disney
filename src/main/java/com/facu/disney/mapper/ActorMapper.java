@@ -3,7 +3,7 @@ package com.facu.disney.mapper;
 import com.facu.disney.dto.ActorBasicDTO;
 import com.facu.disney.dto.ActorDTO;
 import com.facu.disney.dto.MovieDTO;
-import com.facu.disney.entity.ActorEntity;
+import com.facu.disney.entity.Actor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,69 +17,69 @@ public class ActorMapper {
     MovieMapper movieMapper;
 
     //actorDTO to actorEntity
-    public ActorEntity actorDTO2Entity(ActorDTO dto) {
-        ActorEntity entity = new ActorEntity();
-        entity.setImage(dto.getImage());
-        entity.setName(dto.getName());
-        entity.setAge(dto.getAge());
-        entity.setWeight(dto.getWeight());
-        entity.setHistory(dto.getHistory());
+    public Actor actorDTO2Entity(ActorDTO actorDTO) {
+        Actor actor = new Actor();
+        actor.setImage(actorDTO.getImage());
+        actor.setName(actorDTO.getName());
+        actor.setAge(actorDTO.getAge());
+        actor.setWeight(actorDTO.getWeight());
+        actor.setHistory(actorDTO.getHistory());
 
-        return entity;
+        return actor;
     }
 
     //actorEntity to actorDTO
-    public ActorDTO actorEntity2DTO(ActorEntity entity, boolean loadMovies) {
-        ActorDTO dto = new ActorDTO();
-        dto.setIdActor(entity.getIdActor());
-        dto.setImage(entity.getImage());
-        dto.setName(entity.getName());
-        dto.setAge(entity.getAge());
-        dto.setWeight(entity.getWeight());
-        dto.setHistory(entity.getHistory());
+    public ActorDTO actorEntity2DTO(Actor actor, boolean loadMovies) {
+        ActorDTO actorDTO = new ActorDTO();
+        actorDTO.setIdActor(actor.getIdActor());
+        actorDTO.setImage(actor.getImage());
+        actorDTO.setName(actor.getName());
+        actorDTO.setAge(actor.getAge());
+        actorDTO.setWeight(actor.getWeight());
+        actorDTO.setHistory(actor.getHistory());
         // load movies list
         if (loadMovies) {
-            List<MovieDTO> moviesDTO = movieMapper.movieEntityList2DTOList(entity.getMovies(), false);
-            dto.setMovies(moviesDTO);
+            List<MovieDTO> moviesDTO = movieMapper.movieEntityList2DTOList(actor.getMovies(), false);
+            actorDTO.setMovies(moviesDTO);
         }
-        return dto;
+        return actorDTO;
     }
 
     //actorEntity list to actorDTO list
-    public List<ActorBasicDTO> actorEntityList2DTOBasicList(List<ActorEntity> entities) {
+    public List<ActorBasicDTO> actorEntityList2DTOBasicList(List<Actor> actors) {
         List<ActorBasicDTO> actorsDTO = new ArrayList<>();
-        for (ActorEntity entity : entities) {
-            actorsDTO.add(this.actorEntity2DTOBasic(entity));
+        for (Actor actor : actors) {
+            actorsDTO.add(this.actorEntity2DTOBasic(actor));
         }
         return actorsDTO;
     }
 
     //actorEntity to actorBasicDTO
-    private ActorBasicDTO actorEntity2DTOBasic(ActorEntity entity) {
-        ActorBasicDTO basicDTO = new ActorBasicDTO();
-        basicDTO.setImage(entity.getImage());
-        basicDTO.setName(entity.getName());
+    private ActorBasicDTO actorEntity2DTOBasic(Actor actor) {
+        ActorBasicDTO actorBasicDTO = new ActorBasicDTO();
+        actorBasicDTO.setImage(actor.getImage());
+        actorBasicDTO.setName(actor.getName());
 
-        return basicDTO;
+        return actorBasicDTO;
     }
 
     //update actor
-    public void actorEntityUpdate(ActorEntity entity, ActorDTO dto) {
-        entity.setImage(dto.getImage());
-        entity.setName(dto.getName());
-        entity.setAge(dto.getAge());
-        entity.setWeight(dto.getWeight());
-        entity.setHistory(dto.getHistory());
+    public void actorEntityUpdate(Actor actor, ActorDTO actorDTO) {
+        actor.setImage(actorDTO.getImage());
+        actor.setName(actorDTO.getName());
+        actor.setAge(actorDTO.getAge());
+        actor.setWeight(actorDTO.getWeight());
+        actor.setHistory(actorDTO.getHistory());
     }
     
      // actorEntity list to actorDTO list
-    public List<ActorDTO> actorEntityList2DTOList(Collection<ActorEntity> entities, boolean loadMovies) {
-        List<ActorDTO> dtos = new ArrayList<>();
-        for (ActorEntity entity : entities) {
-            dtos.add(this.actorEntity2DTO(entity, loadMovies));
+    public List<ActorDTO> actorEntityList2DTOList(Collection<Actor> actors, boolean loadMovies) {
+        List<ActorDTO> actorsDTO = new ArrayList<>();
+        for (Actor actor : actors) {
+            actorsDTO.add(this.actorEntity2DTO(actor, loadMovies));
         }
 
-        return dtos;
+        return actorsDTO;
     }
 
 }

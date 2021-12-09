@@ -1,8 +1,8 @@
 package com.facu.disney.repository.specification;
 
 import com.facu.disney.dto.MovieFiltersDTO;
-import com.facu.disney.entity.GenreEntity;
-import com.facu.disney.entity.MovieEntity;
+import com.facu.disney.entity.Genre;
+import com.facu.disney.entity.Movie;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.criteria.*;
@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class MovieSpecification {
 
-    public Specification<MovieEntity> getMovieByFilters(MovieFiltersDTO filtersDTO) {
+    public Specification<Movie> getMovieByFilters(MovieFiltersDTO filtersDTO) {
         return (root, query, criteriaBuilder) -> {
 
             List<Predicate> predicates = new ArrayList<>();
@@ -27,7 +27,7 @@ public class MovieSpecification {
             }
 
             if (!CollectionUtils.isEmpty(filtersDTO.getGenre())) {
-                Join<GenreEntity, MovieEntity> join = root.join("genre", JoinType.INNER);
+                Join<Genre, Movie> join = root.join("genre", JoinType.INNER);
                 Expression<String> genreId = join.get("idGenre");
                 predicates.add(genreId.in(filtersDTO.getGenre()));
             }

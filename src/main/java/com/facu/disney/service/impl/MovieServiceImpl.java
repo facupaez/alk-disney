@@ -3,7 +3,7 @@ package com.facu.disney.service.impl;
 import com.facu.disney.dto.MovieBasicDTO;
 import com.facu.disney.dto.MovieDTO;
 import com.facu.disney.dto.MovieFiltersDTO;
-import com.facu.disney.entity.MovieEntity;
+import com.facu.disney.entity.Movie;
 import com.facu.disney.exception.InvalidParam;
 import com.facu.disney.mapper.MovieMapper;
 import com.facu.disney.repository.MovieRepository;
@@ -28,8 +28,8 @@ public class MovieServiceImpl implements MovieService {
     //get basic list movies
     @Override
     public List<MovieBasicDTO> getBasicList() {
-        List<MovieEntity> entities = this.movieRepository.findAll();
-        List<MovieBasicDTO> result = this.movieMapper.movieEntityList2DTOBasicList(entities);
+        List<Movie> movies = movieRepository.findAll();
+        List<MovieBasicDTO> result = movieMapper.movieEntityList2DTOBasicList(movies);
 
         return result;
     }
@@ -38,37 +38,37 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDTO getDetailsById(Long idMovie) {
 
-        Optional<MovieEntity> entity = this.movieRepository.findById(idMovie);
+        Optional<Movie> movieOp = movieRepository.findById(idMovie);
 
-        if (!entity.isPresent()) {
+        if (!movieOp.isPresent()) {
             throw new InvalidParam("El id ingresado no existe.");
         }
-        MovieDTO movie = this.movieMapper.movieEntity2DTO(entity.get(), true);
+        MovieDTO movieDTO = movieMapper.movieEntity2DTO(movieOp.get(), true);
 
-        return movie;
+        return movieDTO;
     }
 
     //method save movie
     @Override
-    public MovieDTO save(MovieDTO dto) {
-        MovieEntity entity = this.movieMapper.movieDTO2Entity(dto);
-        MovieEntity movieSaved = this.movieRepository.save(entity);
-        MovieDTO result = this.movieMapper.movieEntity2DTO(movieSaved, false);
+    public MovieDTO save(MovieDTO movieDTO) {
+        Movie movie = movieMapper.movieDTO2Entity(movieDTO);
+        Movie movieSaved = movieRepository.save(movie);
+        MovieDTO result = movieMapper.movieEntity2DTO(movieSaved, false);
 
         return result;
     }
 
     //method update movie
     @Override
-    public MovieDTO update(MovieDTO dto, Long idMovie) {
-        Optional<MovieEntity> entity = this.movieRepository.findById(idMovie);
+    public MovieDTO update(MovieDTO movieDTO, Long idMovie) {
+        Optional<Movie> movieOp = movieRepository.findById(idMovie);
 
-        if (!entity.isPresent()) {
+        if (!movieOp.isPresent()) {
             throw new InvalidParam("El id ingresado no existe.");
         }
-        this.movieMapper.movieEntityUpdate(entity.get(), dto);
-        MovieEntity movieSaved = this.movieRepository.save(entity.get());
-        MovieDTO result = this.movieMapper.movieEntity2DTO(movieSaved, false);
+        this.movieMapper.movieEntityUpdate(movieOp.get(), movieDTO);
+        Movie movieSaved = movieRepository.save(movieOp.get());
+        MovieDTO result = movieMapper.movieEntity2DTO(movieSaved, false);
 
         return result;
     }
@@ -76,13 +76,13 @@ public class MovieServiceImpl implements MovieService {
     //method delete movie
     @Override
     public void delete(Long idMovie) {
-        Optional<MovieEntity> entity = this.movieRepository.findById(idMovie);
+        Optional<Movie> movieOp = movieRepository.findById(idMovie);
 
-        if (!entity.isPresent()) {
+        if (!movieOp.isPresent()) {
             throw new InvalidParam("El id ingresado no existe.");
         }
-        MovieEntity movie = entity.get();
-        movie.setDeleted(false);
+        Movie movie = movieOp.get();
+        movie.setDeleted(true);
         movieRepository.save(movie);
     }
 
@@ -90,9 +90,9 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieDTO> getDetailsByFilters(String title, Set<Long> genre, String order) {
         MovieFiltersDTO filtersDTO = new MovieFiltersDTO(title, genre, order);
-        List<MovieEntity> entities = movieRepository.findAll(movieSpecification.getMovieByFilters(filtersDTO));
-        List<MovieDTO> dtos = movieMapper.movieEntityList2DTOList(entities, true);
-        return dtos;
+        List<Movie> movies = movieRepository.findAll(movieSpecification.getMovieByFilters(filtersDTO));
+        List<MovieDTO> moviesDTO = movieMapper.movieEntityList2DTOList(movies, true);
+        return moviesDTO;
     }
 
 }

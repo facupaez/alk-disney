@@ -1,6 +1,6 @@
 package com.facu.disney.repository;
 
-import com.facu.disney.entity.ActorEntity;
+import com.facu.disney.entity.Actor;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ActorRepository extends JpaRepository<ActorEntity, Long>, JpaSpecificationExecutor<ActorEntity> {
+public interface ActorRepository extends JpaRepository<Actor, Long>, JpaSpecificationExecutor<Actor> {
 
     // combinate filters
-    List<ActorEntity> findAll(Specification<ActorEntity> spec);
+    List<Actor> findAll(Specification<Actor> spec);
 }

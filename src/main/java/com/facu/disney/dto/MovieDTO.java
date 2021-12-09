@@ -12,6 +12,6 @@ public class MovieDTO {
     private String title;
     private String creationDate;
     private Long qualification;
-    private Long genreId;
+    //private Long genreId;
     private List<ActorDTO> actors;
 }

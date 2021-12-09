@@ -1,8 +1,8 @@
 package com.facu.disney.repository.specification;
 
 import com.facu.disney.dto.ActorFiltersDTO;
-import com.facu.disney.entity.ActorEntity;
-import com.facu.disney.entity.MovieEntity;
+import com.facu.disney.entity.Actor;
+import com.facu.disney.entity.Movie;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.criteria.*;
@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class ActorSpecification {
 
-    public Specification<ActorEntity> getActorByFilters(ActorFiltersDTO filtersDTO) {
+    public Specification<Actor> getActorByFilters(ActorFiltersDTO filtersDTO) {
         return (root, query, criteriaBuilder) -> {
 
             List<Predicate> predicates = new ArrayList<>();
@@ -35,7 +35,7 @@ public class ActorSpecification {
             
 
             if (!CollectionUtils.isEmpty(filtersDTO.getMovies())) {
-                Join<MovieEntity, ActorEntity> join = root.join("movies", JoinType.INNER);
+                Join<Movie, Actor> join = root.join("movies", JoinType.INNER);
                 Expression<String> moviesId = join.get("idMovie");
                 predicates.add(moviesId.in(filtersDTO.getMovies()));
             }

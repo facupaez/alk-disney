@@ -3,7 +3,7 @@ package com.facu.disney.mapper;
 import com.facu.disney.dto.ActorDTO;
 import com.facu.disney.dto.MovieBasicDTO;
 import com.facu.disney.dto.MovieDTO;
-import com.facu.disney.entity.MovieEntity;
+import com.facu.disney.entity.Movie;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,61 +18,58 @@ public class MovieMapper {
     ActorMapper actorMapper;
 
     // movieDTO to movieEntity
-    public MovieEntity movieDTO2Entity(MovieDTO dto) {
-        MovieEntity entity = new MovieEntity();
-        entity.setImage(dto.getImage());
-        entity.setTitle(dto.getTitle());
-        entity.setCreationDate(this.string2LocalDate(dto.getCreationDate()));
-        entity.setQualification(dto.getQualification());
-        entity.setGenreId(dto.getGenreId());
+    public Movie movieDTO2Entity(MovieDTO movieDTO) {
+        Movie movie = new Movie();
+        movie.setImage(movieDTO.getImage());
+        movie.setTitle(movieDTO.getTitle());
+        movie.setCreationDate(this.string2LocalDate(movieDTO.getCreationDate()));
+        movie.setQualification(movieDTO.getQualification());
 
-        return entity;
+        return movie;
     }
 
     // movieEntity to movieDTO
-    public MovieDTO movieEntity2DTO(MovieEntity entity, boolean loadActors) {
-        MovieDTO dto = new MovieDTO();
-        dto.setIdMovie(entity.getIdMovie());
-        dto.setImage(entity.getImage());
-        dto.setTitle(entity.getTitle());
-        dto.setCreationDate(entity.getCreationDate().toString());
-        dto.setQualification(entity.getQualification());
-        dto.setGenreId(entity.getGenreId());
+    public MovieDTO movieEntity2DTO(Movie movie, boolean loadActors) {
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setIdMovie(movie.getIdMovie());
+        movieDTO.setImage(movie.getImage());
+        movieDTO.setTitle(movie.getTitle());
+        movieDTO.setCreationDate(movie.getCreationDate().toString());
+        movieDTO.setQualification(movie.getQualification());
         //load actors list
         if (loadActors) {
-            List<ActorDTO> actorsDTO = actorMapper.actorEntityList2DTOList(entity.getActors(), false);
-            dto.setActors(actorsDTO);
+            List<ActorDTO> actorsDTO = actorMapper.actorEntityList2DTOList(movie.getActors(), false);
+            movieDTO.setActors(actorsDTO);
         }
-        return dto;
+        return movieDTO;
     }
 
     // movieEntity list to movieDTO list
-    public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entities, boolean loadActors) {
+    public List<MovieDTO> movieEntityList2DTOList(List<Movie> movies, boolean loadActors) {
         List<MovieDTO> moviesDTO = new ArrayList<>();
-        for (MovieEntity entity : entities) {
-            moviesDTO.add(this.movieEntity2DTO(entity, loadActors));
+        for (Movie movie : movies) {
+            moviesDTO.add(this.movieEntity2DTO(movie, loadActors));
         }
         return moviesDTO;
     }
 
     //movieEntity list to movieDTO list
-    public List<MovieBasicDTO> movieEntityList2DTOBasicList(List<MovieEntity> entities) {
+    public List<MovieBasicDTO> movieEntityList2DTOBasicList(List<Movie> movies) {
         List<MovieBasicDTO> moviesDTO = new ArrayList<>();
-        for (MovieEntity entity : entities) {
-            moviesDTO.add(this.movieEntity2DTOBasic(entity));
+        for (Movie movie : movies) {
+            moviesDTO.add(this.movieEntity2DTOBasic(movie));
         }
         return moviesDTO;
     }
 
     //actorEntity to actorBasicDTO
-    public MovieBasicDTO movieEntity2DTOBasic(MovieEntity entity) {
-        MovieBasicDTO dto = new MovieBasicDTO();
-        //dto.setIdActor(entity.getIdActor());
-        dto.setImage(entity.getImage());
-        dto.setTitle(entity.getTitle());
-        dto.setCreationDate(entity.getCreationDate().toString());
+    public MovieBasicDTO movieEntity2DTOBasic(Movie movie) {
+        MovieBasicDTO movieBasicDTO = new MovieBasicDTO();
+        movieBasicDTO.setImage(movie.getImage());
+        movieBasicDTO.setTitle(movie.getTitle());
+        movieBasicDTO.setCreationDate(movie.getCreationDate().toString());
 
-        return dto;
+        return movieBasicDTO;
     }
 
     //date type to string date type
@@ -83,11 +80,10 @@ public class MovieMapper {
     }
 
     //update movie
-    public void movieEntityUpdate(MovieEntity entity, MovieDTO dto) {
-        entity.setImage(dto.getImage());
-        entity.setTitle(dto.getTitle());
-        entity.setCreationDate(this.string2LocalDate(dto.getCreationDate()));
-        entity.setQualification(dto.getQualification());
-        entity.setGenreId(dto.getGenreId());
+    public void movieEntityUpdate(Movie movie, MovieDTO movieDTO) {
+        movie.setImage(movieDTO.getImage());
+        movie.setTitle(movieDTO.getTitle());
+        movie.setCreationDate(this.string2LocalDate(movieDTO.getCreationDate()));
+        movie.setQualification(movieDTO.getQualification());
     }
 }

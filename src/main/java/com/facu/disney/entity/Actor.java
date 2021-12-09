@@ -9,11 +9,9 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "actor")
 @Data
-//soft delete
-@SQLDelete(sql = "UPDATE actor SET deleted = true WHERE id_actor=?")
 //diferencia los estados de los eliminados y no eliminados
 @Where(clause = "deleted=false")
-public class ActorEntity {
+public class Actor {
 
     @Id
     @Column(name = "id_actor")
@@ -33,5 +31,5 @@ public class ActorEntity {
     private boolean deleted = Boolean.FALSE;
 
     @ManyToMany(mappedBy = "actors", cascade = CascadeType.MERGE)
-    private List<MovieEntity> movies = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
 }

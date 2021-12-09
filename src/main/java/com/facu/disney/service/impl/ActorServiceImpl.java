@@ -3,7 +3,7 @@ package com.facu.disney.service.impl;
 import com.facu.disney.dto.ActorBasicDTO;
 import com.facu.disney.dto.ActorDTO;
 import com.facu.disney.dto.ActorFiltersDTO;
-import com.facu.disney.entity.ActorEntity;
+import com.facu.disney.entity.Actor;
 import com.facu.disney.exception.InvalidParam;
 import com.facu.disney.mapper.ActorMapper;
 import com.facu.disney.repository.ActorRepository;
@@ -27,10 +27,10 @@ public class ActorServiceImpl implements ActorService {
 
     //method save actor
     @Override
-    public ActorDTO save(ActorDTO dto) {
-        ActorEntity entity = this.actorMapper.actorDTO2Entity(dto);
-        ActorEntity actorSaved = this.actorRepository.save(entity);
-        ActorDTO result = this.actorMapper.actorEntity2DTO(actorSaved, false);
+    public ActorDTO save(ActorDTO actorDTO) {
+        Actor actor = actorMapper.actorDTO2Entity(actorDTO);
+        Actor actorSaved = actorRepository.save(actor);
+        ActorDTO result = actorMapper.actorEntity2DTO(actorSaved, false);
 
         return result;
     }
@@ -38,24 +38,24 @@ public class ActorServiceImpl implements ActorService {
     //get basic list actors
     @Override
     public List<ActorBasicDTO> getBasicList() {
-        List<ActorEntity> entities = this.actorRepository.findAll();
-        List<ActorBasicDTO> result = this.actorMapper.actorEntityList2DTOBasicList(entities);
+        List<Actor> actors = actorRepository.findAll();
+        List<ActorBasicDTO> result = actorMapper.actorEntityList2DTOBasicList(actors);
 
         return result;
     }
 
     //method update actor
     @Override
-    public ActorDTO update(ActorDTO dto, Long idActor) {
+    public ActorDTO update(ActorDTO actorDTO, Long idActor) {
 
-        Optional<ActorEntity> entity = this.actorRepository.findById(idActor);
+        Optional<Actor> actor = actorRepository.findById(idActor);
 
-        if (!entity.isPresent()) {
+        if (!actor.isPresent()) {
             throw new InvalidParam("El id ingresado no existe.");
         }
-        this.actorMapper.actorEntityUpdate(entity.get(), dto);
-        ActorEntity actorSaved = this.actorRepository.save(entity.get());
-        ActorDTO result = this.actorMapper.actorEntity2DTO(actorSaved, false);
+        actorMapper.actorEntityUpdate(actor.get(), actorDTO);
+        Actor actorSaved = actorRepository.save(actor.get());
+        ActorDTO result = actorMapper.actorEntity2DTO(actorSaved, false);
 
         return result;
     }
@@ -63,22 +63,29 @@ public class ActorServiceImpl implements ActorService {
     //method delete actor
     @Override
     public void delete(Long idActor) {
-        this.actorRepository.deleteById(idActor);
+        Optional<Actor> actorOp = actorRepository.findById(idActor);
+
+        if (!actorOp.isPresent()) {
+            throw new InvalidParam("El id ingresado no existe.");
+        }
+        Actor actor = actorOp.get();
+        actor.setDeleted(true);
+        actorRepository.save(actor);
     }
 
     //get details by id
     @Override
     public ActorDTO getDetailsById(Long idActor) {
 
-        Optional<ActorEntity> entity = this.actorRepository.findById(idActor);
+        Optional<Actor> actorOp = actorRepository.findById(idActor);
 
-        if (!entity.isPresent()) {
+        if (!actorOp.isPresent()) {
             throw new InvalidParam("El id ingresado no existe.");
         }
 
-        ActorDTO actor = this.actorMapper.actorEntity2DTO(entity.get(), true);
+        ActorDTO actorDTO = actorMapper.actorEntity2DTO(actorOp.get(), true);
 
-        return actor;
+        return actorDTO;
     }
 
     //get filters details by id
@@ -86,10 +93,10 @@ public class ActorServiceImpl implements ActorService {
     public List<ActorDTO> getDetailsByFilters(String name, Long age, Set<Long> movie) {
 
         ActorFiltersDTO filtersDTO = new ActorFiltersDTO(name, age, movie);
-        List<ActorEntity> entities = this.actorRepository.findAll(this.actorSpecification.getActorByFilters(filtersDTO));
-        List<ActorDTO> dtos = this.actorMapper.actorEntityList2DTOList(entities, true);
+        List<Actor> actors = actorRepository.findAll(actorSpecification.getActorByFilters(filtersDTO));
+        List<ActorDTO> actorDTO = actorMapper.actorEntityList2DTOList(actors, true);
 
-        return dtos;
+        return actorDTO;
     }
 
 }

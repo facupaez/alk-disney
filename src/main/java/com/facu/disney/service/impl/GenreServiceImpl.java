@@ -1,7 +1,7 @@
 package com.facu.disney.service.impl;
 
 import com.facu.disney.dto.GenreDTO;
-import com.facu.disney.entity.GenreEntity;
+import com.facu.disney.entity.Genre;
 import com.facu.disney.mapper.GenreMapper;
 import com.facu.disney.repository.GenreRepository;
 import com.facu.disney.service.GenreService;
@@ -21,9 +21,9 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreDTO save(GenreDTO dto) {
 
-        GenreEntity entity = this.genreMapper.genreDTO2Entity(dto);
-        GenreEntity genreSaved = this.genreRepository.save(entity);
-        GenreDTO result = this.genreMapper.genreEntity2DTO(genreSaved);
+        Genre genre = genreMapper.genreDTO2Entity(dto);
+        Genre genreSaved = genreRepository.save(genre);
+        GenreDTO result = genreMapper.genreEntity2DTO(genreSaved);
 
         return result;
     }
@@ -32,8 +32,8 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public List<GenreDTO> getAllGenres() {
         
-        List<GenreEntity> entities = genreRepository.findAll();
-        List<GenreDTO> result = this.genreMapper.genreEntityList2DTOList(entities);
+        List<Genre> genres = genreRepository.findAll();
+        List<GenreDTO> result = genreMapper.genreEntityList2DTOList(genres);
         
         return result;
     }
