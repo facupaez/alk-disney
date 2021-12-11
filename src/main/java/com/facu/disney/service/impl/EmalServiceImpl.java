@@ -15,7 +15,6 @@ public class EmalServiceImpl implements EmailService {
 
     @Autowired
     private Environment env;
-
     @Value("${com.facu.email.sender}")
     private String emailSender;
     @Value("${com.facu.email.enabled}")

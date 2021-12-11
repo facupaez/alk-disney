@@ -1,7 +1,7 @@
 package com.facu.disney.auth.filter;
 
-import com.facu.disney.auth.service.JwtUtils;
-import com.facu.disney.auth.service.UserDetailsCustomService;
+import com.facu.disney.service.JwtUtils;
+import com.facu.disney.service.UserDetailsCustomService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

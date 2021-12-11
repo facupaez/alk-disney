@@ -1,4 +1,4 @@
-package com.facu.disney.auth.service;
+package com.facu.disney.service;
 
 import io.jsonwebtoken.*;
 import java.util.*;

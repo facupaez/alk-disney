@@ -1,4 +1,4 @@
-package com.facu.disney.auth.entity;
+package com.facu.disney.entity;
 
 import java.util.*;
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package com.facu.disney.auth.dto;
+package com.facu.disney.dto;
 
 import javax.validation.constraints.*;
 import lombok.Data;

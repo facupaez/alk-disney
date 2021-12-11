@@ -1,10 +1,10 @@
-package com.facu.disney.auth.controller;
+package com.facu.disney.controller;
 
-import com.facu.disney.auth.dto.AuthenticationRequest;
-import com.facu.disney.auth.dto.AuthenticationResponse;
-import com.facu.disney.auth.dto.UserDTO;
-import com.facu.disney.auth.service.JwtUtils;
-import com.facu.disney.auth.service.UserDetailsCustomService;
+import com.facu.disney.dto.AuthenticationRequest;
+import com.facu.disney.dto.AuthenticationResponse;
+import com.facu.disney.dto.UserDTO;
+import com.facu.disney.service.JwtUtils;
+import com.facu.disney.service.UserDetailsCustomService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

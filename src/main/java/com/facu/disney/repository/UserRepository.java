@@ -1,6 +1,6 @@
-package com.facu.disney.auth.repository;
+package com.facu.disney.repository;
 
-import com.facu.disney.auth.entity.UserEntity;
+import com.facu.disney.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
